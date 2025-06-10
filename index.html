@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Cartelas de Bingo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold text-center mb-8">
+        Gerador de Cartelas de Bingo
+      </h1>
+
+      <!-- Formulário de entrada -->
+      <div
+        id="inputForm"
+        class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6"
+      >
+        <div class="mb-4">
+          <label
+            for="numPlayers"
+            class="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Número de Jogadores (máx. 100)
+          </label>
+          <input
+            type="number"
+            id="numPlayers"
+            min="1"
+            max="100"
+            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div class="mb-6">
+          <label
+            for="numWeeks"
+            class="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Número de Semanas (máx. 24)
+          </label>
+          <input
+            type="number"
+            id="numWeeks"
+            min="1"
+            max="24"
+            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <button
+          id="generateBtn"
+          class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+        >
+          Gerar Cartelas
+        </button>
+      </div>
+
+      <!-- Área de exibição das cartelas -->
+      <div
+        id="cardsContainer"
+        class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- As cartelas serão inseridas aqui via JavaScript -->
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
