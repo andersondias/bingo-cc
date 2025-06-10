@@ -79,19 +79,45 @@ function generateCards(numPlayers, numWeeks) {
             <h3 class="text-lg font-bold mb-4 text-center">Cartela do Jogador ${
               index + 1
             }</h3>
-            <table class="w-full border-collapse">
-                <tbody>
-                    ${card
-                      .map(
-                        (item, i) => `
-                        <tr class="${i % 2 === 0 ? "bg-gray-50" : "bg-white"}">
-                            <td class="p-2 text-center">${item}</td>
+            <div class="border-2 border-gray-800 rounded-lg overflow-hidden">
+                <table class="w-full border-collapse table-fixed">
+                    <tbody>
+                        <tr>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[0]
+                            }</td>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[1]
+                            }</td>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[2]
+                            }</td>
                         </tr>
-                    `
-                      )
-                      .join("")}
-                </tbody>
-            </table>
+                        <tr>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[3]
+                            }</td>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[4]
+                            }</td>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[5]
+                            }</td>
+                        </tr>
+                        <tr>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[6]
+                            }</td>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[7]
+                            }</td>
+                            <td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${
+                              card[8]
+                            }</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         `;
 
     cardElement.innerHTML = cardHTML;
