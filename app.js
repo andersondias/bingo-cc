@@ -16,7 +16,10 @@ function getRandomInt(min, max) {
 
 // Função para calcular o número de células por cartela
 function calculateCellsPerCard(totalCombinations, numPlayers) {
-  const minCellsPerCard = Math.ceil(totalCombinations / numPlayers);
+  const minCellsPerCard = Math.max(
+    9,
+    Math.ceil(totalCombinations / numPlayers)
+  );
   // Arredonda para o próximo múltiplo de 3
   return Math.ceil(minCellsPerCard / 3) * 3;
 }
