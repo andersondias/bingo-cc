@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      Bingo CC - Gerador de Cartelas de Bingo para Classical Conversations
+      Classical Bingo - Gerador de Cartelas de Bingo para revisão de ciclos
     </title>
     <meta
       name="description"
-      content="Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias."
+      content="Crie cartelas de bingo personalizadas para revisão de ciclos! Ferramenta gratuita para educadores e famílias."
     />
     <meta name="author" content="Anderson Dias" />
     <meta
@@ -21,18 +21,18 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Bingo CC" />
+    <meta property="og:site_name" content="Classical Bingo" />
     <meta property="og:url" content="https://andersondias.com.br/bingo-cc" />
     <meta
       property="og:title"
-      content="Bingo CC - Gerador de Cartelas de Bingo para Classical Conversations"
+      content="Classical Bingo - Gerador de Cartelas de Bingo para revisão de ciclos"
     />
     <meta
       property="og:description"
-      content="Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias."
+      content="Crie cartelas de bingo personalizadas para revisão de ciclos! Ferramenta gratuita para educadores e famílias."
     />
     <meta property="og:image" content="./logo-simple.png" />
-    <meta property="og:image:alt" content="Logo do Classical Conversations" />
+    <meta property="og:image:alt" content="Logo do Classical Bingo" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -40,11 +40,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Bingo CC - Gerador de Cartelas de Bingo para Classical Conversations"
+      content="Classical Bingo - Gerador de Cartelas de Bingo para revisão de ciclos"
     />
     <meta
       name="twitter:description"
-      content="Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias."
+      content="Crie cartelas de bingo personalizadas para revisão de ciclos! Ferramenta gratuita para educadores e famílias."
     />
     <meta name="twitter:image" content="./logo-with-background.png" />
 
@@ -194,6 +194,10 @@
           gap: 1rem;
         }
       }
+      .icon-filter {
+        filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
+          brightness(90%) contrast(90%);
+      }
     </style>
   </head>
   <body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
@@ -201,10 +205,10 @@
       <div class="max-w-4xl mx-auto print:!hidden">
         <div class="header-content justify-center">
           <picture>
-            <source srcset="./logo.webp" type="image/webp" />
+            <source srcset="./logo-simple.webp" type="image/webp" />
             <img
-              src="./logo.png"
-              alt="Classical Conversations Logo"
+              src="./logo-simple.png"
+              alt="Classical Bingo Logo"
               class="header-logo hover:opacity-90 transition-opacity duration-300"
               width="250"
               height="250"
@@ -215,8 +219,8 @@
       <p
         class="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-2 print:!hidden"
       >
-        Crie cartelas de bingo personalizadas para revisar o conteúdo do
-        Classical Conversations de forma divertida e interativa.
+        Crie cartelas de bingo personalizadas para revisar o conteúdo de forma
+        divertida e interativa.
       </p>
     </header>
 
@@ -305,11 +309,7 @@
           <img
             src="./icons/safari.svg"
             alt="Site pessoal"
-            class="inline h-8 w-8"
-            style="
-              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
-                brightness(90%) contrast(90%);
-            "
+            class="inline h-8 w-8 icon-filter"
           />
         </a>
         <a
@@ -322,11 +322,7 @@
           <img
             src="./icons/linkedin.svg"
             alt="LinkedIn"
-            class="inline h-8 w-8"
-            style="
-              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
-                brightness(90%) contrast(90%);
-            "
+            class="inline h-8 w-8 icon-filter"
           />
         </a>
         <a
@@ -339,11 +335,7 @@
           <img
             src="./icons/github.svg"
             alt="GitHub"
-            class="inline h-8 w-8"
-            style="
-              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
-                brightness(90%) contrast(90%);
-            "
+            class="inline h-8 w-8 icon-filter"
           />
         </a>
         <a
@@ -353,15 +345,7 @@
           title="X (Twitter)"
           class="transform hover:scale-110 transition-transform duration-300"
         >
-          <img
-            src="./icons/x.svg"
-            alt="X"
-            class="inline h-8 w-8"
-            style="
-              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
-                brightness(90%) contrast(90%);
-            "
-          />
+          <img src="./icons/x.svg" alt="X" class="inline h-8 w-8 icon-filter" />
         </a>
       </div>
     </footer>
@@ -371,8 +355,8 @@
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Bingo CC - Gerador de Cartelas de Bingo",
-        "description": "Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias.",
+        "name": "Classical Bingo - Gerador de Cartelas de Bingo",
+        "description": "Crie cartelas de bingo personalizadas para revisão de ciclos! Ferramenta gratuita para educadores e famílias.",
         "url": "https://andersondias.com.br/bingo-cc",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Web",

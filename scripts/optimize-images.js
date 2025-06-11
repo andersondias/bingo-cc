@@ -1,10 +1,22 @@
 const sharp = require("sharp");
 const path = require("path");
 
+const images = [
+  {
+    input: "logo.png",
+    output: "logo.webp",
+  },
+  {
+    input: "logo-simple.png",
+    output: "logo-simple.webp",
+  },
+];
+
 async function optimizeImages() {
   try {
-    // Optimize logo.png to WebP
-    await sharp("logo.png").webp({ quality: 80 }).toFile("logo.webp");
+    for (const image of images) {
+      await sharp(image.input).webp({ quality: 80 }).toFile(image.output);
+    }
 
     console.log("Image optimization completed successfully!");
   } catch (error) {
