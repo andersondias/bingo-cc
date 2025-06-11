@@ -3,7 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gerador de Cartelas de Bingo</title>
+    <title>Gerador de Cartelas de Bingo para Classical Conversations</title>
+    <meta
+      name="description"
+      content="Gerador de cartelas de bingo para Classical Conversations"
+    />
+    <meta name="author" content="Anderson Dias" />
+    <meta name="keywords" content="bingo, classical conversations, cartelas" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="og:title"
+      content="Gerador de Cartelas de Bingo para Classical Conversations"
+    />
+    <meta
+      name="og:description"
+      content="Gerador de cartelas de bingo para Classical Conversations"
+    />
+    <meta
+      name="og:image"
+      content="https://www.classicalconversations.com/wp-content/uploads/2021/01/CC-Logo-Horizontal-Black-1.png"
+    />
+    <meta name="og:url" content="https://www.classicalconversations.com/" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       @media print {
@@ -22,22 +43,24 @@
 
         /* Container styling for print */
         #cardsContainer {
-          display: block;
-          width: 100%;
-          margin: 0;
-          padding: 0;
+          display: grid !important;
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 20px !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 20px !important;
         }
 
         /* Card styling for print */
         .card-content {
-          width: 50% !important;
-          display: inline-block !important;
-          vertical-align: top !important;
+          width: 100% !important;
+          display: block !important;
           page-break-inside: avoid;
           break-inside: avoid;
           margin: 0 !important;
-          padding: 10px !important;
+          padding: 15px !important;
           box-shadow: none !important;
+          border: 1px solid #ccc !important;
         }
 
         /* Ensure table borders print properly */
@@ -60,6 +83,13 @@
         .card-content:nth-child(2n) {
           page-break-after: always;
           break-after: page;
+        }
+
+        /* Ensure the container takes full width */
+        .container {
+          max-width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
         }
       }
 
