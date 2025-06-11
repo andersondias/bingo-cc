@@ -118,6 +118,18 @@ function generateCards(numPlayers, numWeeks) {
   const totalCombinations = allCombinations.length;
   const cellsPerCard = calculateCellsPerCard(totalCombinations, numPlayers);
 
+  // Adiciona a cartela completa com todas as combinações únicas
+  const fullCardElement = document.createElement("div");
+  fullCardElement.className =
+    "bg-white rounded-lg shadow-md p-4 card-content print:w-1/2 print:inline-block print:align-top";
+  fullCardElement.innerHTML = `
+    <h3 class="text-lg font-bold mb-4 text-center">Fichas</h3>
+    <div class="border-2 border-gray-800 rounded-lg overflow-hidden">
+      ${generateCardTable(allCombinations, allCombinations.length)}
+    </div>
+  `;
+  cardsContainer.appendChild(fullCardElement);
+
   // Embaralha as combinações
   let shuffledArray = shuffleArray([...allCombinations]);
 
