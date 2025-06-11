@@ -171,7 +171,10 @@ function generateCards(numPlayers, numWeeks) {
           </button>
         </div>
     `;
-  cardsContainer.appendChild(infoElement);
+  // Só adiciona o infoElement se houver o parâmetro 'dev' na URL
+  if (new URLSearchParams(window.location.search).has("dev")) {
+    cardsContainer.appendChild(infoElement);
+  }
 
   // Adiciona o event listener para o botão de validação
   document.getElementById("validateBtn").addEventListener("click", () => {
