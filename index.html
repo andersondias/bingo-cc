@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Bingo CC - Gerador de Cartelas de Bingo para Classical Conversations
+    </title>
+    <meta
+      name="description"
+      content="Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias."
+    />
+    <meta name="author" content="Anderson Dias" />
+    <meta
+      name="keywords"
+      content="bingo, classical conversations, cartelas, educação clássica, homeschooling, revisão, ciclos, memory work"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#11255f" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bingo CC" />
+    <meta property="og:url" content="https://andersondias.com.br/bingo-cc" />
+    <meta
+      property="og:title"
+      content="Bingo CC - Gerador de Cartelas de Bingo para Classical Conversations"
+    />
+    <meta
+      property="og:description"
+      content="Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias."
+    />
+    <meta property="og:image" content="./logo-simple.png" />
+    <meta property="og:image:alt" content="Logo do Classical Conversations" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Bingo CC - Gerador de Cartelas de Bingo para Classical Conversations"
+    />
+    <meta
+      name="twitter:description"
+      content="Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias."
+    />
+    <meta name="twitter:image" content="./logo-with-background.png" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="./logo-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="./logo-180x180.png" />
+    <link rel="icon" href="./logo-192x192.png" sizes="192x192" />
+    <meta name="msapplication-TileImage" content="./logo-192x192.png" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://andersondias.com.br/bingo-cc" />
+
+    <link href="dist/output.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @media print {
+        /* Hide form and info section */
+        .print\:hidden,
+        form {
+          display: none !important;
+        }
+
+        /* Reset background colors for better printing */
+        body {
+          background: white !important;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Container styling for print */
+        #cardsContainer {
+          display: block !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 30px !important;
+        }
+
+        /* Card styling for print */
+        .card-content {
+          width: 100% !important;
+          display: block !important;
+          page-break-inside: avoid;
+          break-inside: avoid;
+          margin: 0 0 30px 0 !important;
+          padding: 20px !important;
+          box-shadow: none !important;
+          border: 2px dashed #ccc !important;
+          border-radius: 8px !important;
+        }
+
+        /* Ensure table borders print properly */
+        td {
+          border: 1px solid #000 !important;
+          background: white !important;
+          padding: 8px !important;
+          text-align: center !important;
+          font-size: 14px !important;
+        }
+
+        /* Remove shadows and adjust borders for better printing */
+        .shadow-md {
+          box-shadow: none !important;
+        }
+
+        /* Ensure text is black for better printing */
+        * {
+          color: black !important;
+        }
+
+        /* Add page breaks after every second card */
+        .card-content:nth-of-type(2n) {
+          page-break-after: always;
+          break-after: page;
+        }
+
+        /* Ensure the container takes full width */
+        .container {
+          max-width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+      }
+
+      .primary-title {
+        color: #11255f;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        font-family: "Playfair Display", serif;
+      }
+
+      .primary-btn {
+        background-color: #11255f !important;
+        color: #fff !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .primary-btn:hover,
+      .primary-btn:focus {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-field {
+        transition: all 0.3s ease;
+      }
+
+      .input-field:focus {
+        border-color: #11255f;
+        box-shadow: 0 0 0 3px rgba(17, 37, 95, 0.1);
+      }
+
+      .card-content {
+        transition: all 0.3s ease;
+      }
+
+      .card-content:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #11255f;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #0a1a4a;
+      }
+
+      .header-logo {
+        height: 10rem;
+        width: auto;
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 640px) {
+        .header-content {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
+    <header class="container mx-auto px-4 py-4">
+      <div class="max-w-4xl mx-auto print:!hidden">
+        <div class="header-content justify-center">
+          <img
+            src="./logo.png"
+            alt="Classical Conversations Logo"
+            class="header-logo hover:opacity-90 transition-opacity duration-300"
+          />
+        </div>
+      </div>
+      <p
+        class="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-2 print:!hidden"
+      >
+        Crie cartelas de bingo personalizadas para revisar o conteúdo do
+        Classical Conversations de forma divertida e interativa.
+      </p>
+    </header>
+
+    <main class="container mx-auto px-4 py-4">
+      <!-- Formulário de entrada -->
+      <div
+        id="inputForm"
+        class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 print:!hidden transform hover:scale-[1.01] transition-transform duration-300"
+      >
+        <div class="mb-2">
+          <label
+            for="numPlayers"
+            class="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Número de Jogadores (máx. 100)
+          </label>
+          <input
+            type="number"
+            inputmode="numeric"
+            id="numPlayers"
+            min="1"
+            max="100"
+            class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 input-field"
+            placeholder="Ex: 10"
+          />
+        </div>
+
+        <div class="mb-8">
+          <label
+            for="numWeeks"
+            class="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Em que semana você está? (máx. 24)
+          </label>
+          <input
+            type="number"
+            inputmode="numeric"
+            id="numWeeks"
+            min="1"
+            max="24"
+            class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 input-field"
+            placeholder="Ex: 5"
+          />
+        </div>
+
+        <div class="flex gap-4">
+          <button
+            type="button"
+            id="generateBtn"
+            class="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 primary-btn font-semibold"
+          >
+            Gerar Cartelas
+          </button>
+          <button
+            type="button"
+            id="printBtn"
+            class="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all duration-300"
+            disabled
+          >
+            Imprimir Cartelas
+          </button>
+        </div>
+      </div>
+
+      <!-- Área de exibição das cartelas -->
+      <div
+        id="cardsContainer"
+        class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+        <!-- As cartelas serão inseridas aqui via JavaScript -->
+      </div>
+    </main>
+
+    <footer class="mt-2 py-12 text-center print:!hidden bg-white shadow-inner">
+      <div class="mb-4 text-xl font-semibold" style="color: #11255f">
+        Feito com ♥ por Anderson Dias, um pai educador.
+      </div>
+      <div class="flex justify-center gap-8 mt-6 text-2xl">
+        <a
+          href="https://andersondias.com.br/"
+          target="_blank"
+          rel="noopener"
+          title="Site pessoal"
+          class="transform hover:scale-110 transition-transform duration-300"
+        >
+          <img
+            src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/safari.svg"
+            alt="Site pessoal"
+            class="inline h-8 w-8"
+            style="
+              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
+                brightness(90%) contrast(90%);
+            "
+          />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/anderson-dias-3967097/"
+          target="_blank"
+          rel="noopener"
+          title="LinkedIn"
+          class="transform hover:scale-110 transition-transform duration-300"
+        >
+          <img
+            src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+            alt="LinkedIn"
+            class="inline h-8 w-8"
+            style="
+              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
+                brightness(90%) contrast(90%);
+            "
+          />
+        </a>
+        <a
+          href="https://github.com/andersondias"
+          target="_blank"
+          rel="noopener"
+          title="GitHub"
+          class="transform hover:scale-110 transition-transform duration-300"
+        >
+          <img
+            src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
+            alt="GitHub"
+            class="inline h-8 w-8"
+            style="
+              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
+                brightness(90%) contrast(90%);
+            "
+          />
+        </a>
+        <a
+          href="https://x.com/extendsmymind"
+          target="_blank"
+          rel="noopener"
+          title="X (Twitter)"
+          class="transform hover:scale-110 transition-transform duration-300"
+        >
+          <img
+            src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg"
+            alt="X"
+            class="inline h-8 w-8"
+            style="
+              filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
+                brightness(90%) contrast(90%);
+            "
+          />
+        </a>
+      </div>
+    </footer>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Bingo CC - Gerador de Cartelas de Bingo",
+        "description": "Crie cartelas de bingo personalizadas para revisão de ciclos do programa Classical Conversations! Ferramenta gratuita para educadores e famílias.",
+        "url": "https://andersondias.com.br/bingo-cc",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Anderson Dias",
+          "url": "https://andersondias.com.br"
+        }
+      }
+    </script>
+
+    <script src="app.js?v=202406102300"></script>
+  </body>
+</html>
