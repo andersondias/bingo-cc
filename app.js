@@ -128,7 +128,6 @@ function generateCards(numPlayers, numWeeks) {
       ${generateCardTable(allCombinations, allCombinations.length)}
     </div>
   `;
-  cardsContainer.appendChild(fullCardElement);
 
   // Embaralha as combinações
   let shuffledArray = shuffleArray([...allCombinations]);
@@ -168,6 +167,7 @@ function generateCards(numPlayers, numWeeks) {
 
     cardElement.innerHTML = cardHTML;
     cardsContainer.appendChild(cardElement);
+    cardsContainer.appendChild(fullCardElement);
   });
 
   // Adiciona informações sobre as combinações disponíveis
