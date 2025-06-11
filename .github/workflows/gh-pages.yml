@@ -27,6 +27,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: . # or 'public' if you use a public folder
           # If your site is in a subfolder, set publish_dir accordingly
+          commit_message: "Deploy to GitHub Pages"
