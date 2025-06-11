@@ -87,9 +87,7 @@
 
         /* Container styling for print */
         #cardsContainer {
-          display: grid !important;
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 30px !important;
+          display: block !important;
           width: 100% !important;
           margin: 0 !important;
           padding: 30px !important;
@@ -101,7 +99,7 @@
           display: block !important;
           page-break-inside: avoid;
           break-inside: avoid;
-          margin: 0 !important;
+          margin: 0 0 30px 0 !important;
           padding: 20px !important;
           box-shadow: none !important;
           border: 2px dashed #ccc !important;
@@ -127,8 +125,8 @@
           color: black !important;
         }
 
-        /* Add page breaks between rows of cards */
-        .card-content:nth-child(2n) {
+        /* Add page breaks after every second card */
+        .card-content:nth-of-type(2n) {
           page-break-after: always;
           break-after: page;
         }
@@ -216,7 +214,7 @@
     </style>
   </head>
   <body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
-    <header class="container mx-auto px-4 py-8">
+    <header class="container mx-auto px-4 py-4">
       <div class="max-w-4xl mx-auto print:!hidden">
         <div class="header-content justify-center">
           <img
@@ -229,19 +227,21 @@
           </div>
         </div>
       </div>
-      <p class="text-gray-600 text-lg text-center max-w-2xl mx-auto my-8">
+      <p
+        class="text-gray-600 text-lg text-center max-w-2xl mx-auto my-8 print:!hidden"
+      >
         Crie cartelas de bingo personalizadas para revisar o conteúdo do
         Classical Conversations de forma divertida e interativa.
       </p>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-4">
       <!-- Formulário de entrada -->
       <div
         id="inputForm"
         class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 print:!hidden transform hover:scale-[1.01] transition-transform duration-300"
       >
-        <div class="mb-6">
+        <div class="mb-2">
           <label
             for="numPlayers"
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -297,13 +297,13 @@
       <!-- Área de exibição das cartelas -->
       <div
         id="cardsContainer"
-        class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <!-- As cartelas serão inseridas aqui via JavaScript -->
       </div>
     </main>
 
-    <footer class="mt-16 py-12 text-center print:!hidden bg-white shadow-inner">
+    <footer class="mt-2 py-12 text-center print:!hidden bg-white shadow-inner">
       <div class="mb-4 text-xl font-semibold" style="color: #11255f">
         Feito com ♥ por Anderson Dias, um pai educador.
       </div>
