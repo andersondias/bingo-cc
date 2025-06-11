@@ -177,12 +177,22 @@ function generateCards(numPlayers, numWeeks) {
   }
 
   // Adiciona o event listener para o botão de validação
-  document.getElementById("validateBtn").addEventListener("click", () => {
-    validateAllCombinations(numWeeks);
-  });
+  const validateBtn = document.getElementById("validateBtn");
+  if (validateBtn) {
+    validateBtn.addEventListener("click", () => {
+      validateAllCombinations(numWeeks);
+    });
+  }
 
   // Enable print button after cards are generated
-  document.getElementById("printBtn").disabled = false;
+  const printBtn = document.getElementById("printBtn");
+  if (printBtn) {
+    printBtn.disabled = false;
+    printBtn.classList.remove(
+      "disabled:opacity-50",
+      "disabled:cursor-not-allowed"
+    );
+  }
 }
 
 // Event Listeners
@@ -193,7 +203,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const printBtn = document.getElementById("printBtn");
 
   // Initially disable print button
-  printBtn.disabled = true;
+  if (printBtn) {
+    printBtn.disabled = true;
+    printBtn.classList.add(
+      "disabled:opacity-50",
+      "disabled:cursor-not-allowed"
+    );
+  }
 
   generateBtn.addEventListener("click", () => {
     const numPlayers = parseInt(numPlayersInput.value);
@@ -213,7 +229,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Add print button event listener
-  printBtn.addEventListener("click", () => {
-    window.print();
-  });
+  if (printBtn) {
+    printBtn.addEventListener("click", () => {
+      window.print();
+    });
+  }
 });

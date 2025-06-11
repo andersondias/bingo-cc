@@ -83,10 +83,10 @@
         #cardsContainer {
           display: grid !important;
           grid-template-columns: repeat(2, 1fr) !important;
-          gap: 20px !important;
+          gap: 30px !important;
           width: 100% !important;
           margin: 0 !important;
-          padding: 20px !important;
+          padding: 30px !important;
         }
 
         /* Card styling for print */
@@ -96,15 +96,19 @@
           page-break-inside: avoid;
           break-inside: avoid;
           margin: 0 !important;
-          padding: 15px !important;
+          padding: 20px !important;
           box-shadow: none !important;
-          border: 1px solid #ccc !important;
+          border: 2px dashed #ccc !important;
+          border-radius: 8px !important;
         }
 
         /* Ensure table borders print properly */
         td {
           border: 1px solid #000 !important;
           background: white !important;
+          padding: 8px !important;
+          text-align: center !important;
+          font-size: 14px !important;
         }
 
         /* Remove shadows and adjust borders for better printing */
@@ -133,27 +137,68 @@
 
       .primary-title {
         color: #11255f;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
       }
 
       .primary-btn {
         background-color: #11255f !important;
         color: #fff !important;
+        transition: all 0.3s ease !important;
       }
+
       .primary-btn:hover,
       .primary-btn:focus {
         opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-field {
+        transition: all 0.3s ease;
+      }
+
+      .input-field:focus {
+        border-color: #11255f;
+        box-shadow: 0 0 0 3px rgba(17, 37, 95, 0.1);
+      }
+
+      .card-content {
+        transition: all 0.3s ease;
+      }
+
+      .card-content:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #11255f;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #0a1a4a;
       }
     </style>
   </head>
-  <body class="bg-gray-100 min-h-screen">
+  <body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
     <header class="container mx-auto px-4 py-8">
       <img
         src="./logo-classical-conversations.png"
         alt="Classical Conversations Logo"
-        class="mx-auto mb-4 h-16 print:!hidden"
+        class="mx-auto mb-4 h-16 print:!hidden hover:opacity-90 transition-opacity duration-300"
       />
       <h1
-        class="text-3xl font-bold text-center mb-8 print:!hidden primary-title"
+        class="text-4xl font-bold text-center mb-8 print:!hidden primary-title"
       >
         Gerador de Cartelas de Bingo
       </h1>
@@ -163,9 +208,9 @@
       <!-- Formulário de entrada -->
       <div
         id="inputForm"
-        class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 print:!hidden"
+        class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8 print:!hidden transform hover:scale-[1.01] transition-transform duration-300"
       >
-        <div class="mb-4">
+        <div class="mb-6">
           <label
             for="numPlayers"
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -177,11 +222,12 @@
             id="numPlayers"
             min="1"
             max="100"
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 input-field"
+            placeholder="Ex: 10"
           />
         </div>
 
-        <div class="mb-6">
+        <div class="mb-8">
           <label
             for="numWeeks"
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -193,7 +239,8 @@
             id="numWeeks"
             min="1"
             max="24"
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 input-field"
+            placeholder="Ex: 5"
           />
         </div>
 
@@ -201,14 +248,14 @@
           <button
             type="button"
             id="generateBtn"
-            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 primary-btn"
+            class="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 primary-btn font-semibold"
           >
             Gerar Cartelas
           </button>
           <button
             type="button"
             id="printBtn"
-            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all duration-300"
             disabled
           >
             Imprimir Cartelas
@@ -219,27 +266,28 @@
       <!-- Área de exibição das cartelas -->
       <div
         id="cardsContainer"
-        class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         <!-- As cartelas serão inseridas aqui via JavaScript -->
       </div>
     </main>
 
-    <footer class="mt-12 py-8 text-center print:!hidden">
-      <div class="mb-2 text-lg font-semibold" style="color: #11255f">
+    <footer class="mt-16 py-12 text-center print:!hidden bg-white shadow-inner">
+      <div class="mb-4 text-xl font-semibold" style="color: #11255f">
         Feito com ♥ por Anderson Dias, um pai educador.
       </div>
-      <div class="flex justify-center gap-6 mt-4 text-2xl">
+      <div class="flex justify-center gap-8 mt-6 text-2xl">
         <a
           href="https://andersondias.com.br/"
           target="_blank"
           rel="noopener"
           title="Site pessoal"
+          class="transform hover:scale-110 transition-transform duration-300"
         >
           <img
             src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/safari.svg"
             alt="Site pessoal"
-            class="inline h-7 w-7"
+            class="inline h-8 w-8"
             style="
               filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
                 brightness(90%) contrast(90%);
@@ -251,11 +299,12 @@
           target="_blank"
           rel="noopener"
           title="LinkedIn"
+          class="transform hover:scale-110 transition-transform duration-300"
         >
           <img
             src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
             alt="LinkedIn"
-            class="inline h-7 w-7"
+            class="inline h-8 w-8"
             style="
               filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
                 brightness(90%) contrast(90%);
@@ -267,11 +316,12 @@
           target="_blank"
           rel="noopener"
           title="GitHub"
+          class="transform hover:scale-110 transition-transform duration-300"
         >
           <img
             src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
             alt="GitHub"
-            class="inline h-7 w-7"
+            class="inline h-8 w-8"
             style="
               filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
                 brightness(90%) contrast(90%);
@@ -283,11 +333,12 @@
           target="_blank"
           rel="noopener"
           title="X (Twitter)"
+          class="transform hover:scale-110 transition-transform duration-300"
         >
           <img
             src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg"
             alt="X"
-            class="inline h-7 w-7"
+            class="inline h-8 w-8"
             style="
               filter: invert(13%) sepia(80%) saturate(748%) hue-rotate(191deg)
                 brightness(90%) contrast(90%);
