@@ -64,6 +64,12 @@
     <link rel="canonical" href="https://andersondias.com.br/bingo-cc" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       @media print {
         /* Hide form and info section */
@@ -138,6 +144,7 @@
       .primary-title {
         color: #11255f;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        font-family: "Playfair Display", serif;
       }
 
       .primary-btn {
@@ -188,20 +195,44 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #0a1a4a;
       }
+
+      .header-logo {
+        height: 3rem;
+        width: auto;
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 640px) {
+        .header-content {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
     </style>
   </head>
   <body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
     <header class="container mx-auto px-4 py-8">
-      <img
-        src="./logo-classical-conversations.png"
-        alt="Classical Conversations Logo"
-        class="mx-auto mb-4 h-16 print:!hidden hover:opacity-90 transition-opacity duration-300"
-      />
-      <h1
-        class="text-4xl font-bold text-center mb-8 print:!hidden primary-title"
-      >
-        Gerador de Cartelas de Bingo
-      </h1>
+      <div class="max-w-4xl mx-auto print:!hidden">
+        <div class="header-content justify-center">
+          <img
+            src="./logo-classical-conversations.png"
+            alt="Classical Conversations Logo"
+            class="header-logo hover:opacity-90 transition-opacity duration-300"
+          />
+          <div class="text-center">
+            <h1 class="text-3xl font-bold primary-title">Bingo CC</h1>
+          </div>
+        </div>
+      </div>
+      <p class="text-gray-600 text-lg text-center max-w-2xl mx-auto my-8">
+        Crie cartelas de bingo personalizadas para revisar o conteúdo do
+        Classical Conversations de forma divertida e interativa.
+      </p>
     </header>
 
     <main class="container mx-auto px-4 py-8">
