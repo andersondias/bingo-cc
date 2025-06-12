@@ -224,6 +224,14 @@ document.addEventListener("DOMContentLoaded", () => {
       "disabled:opacity-50",
       "disabled:cursor-not-allowed"
     );
+    printBtn.addEventListener("click", () => {
+      plausible("ClassicalBingoPrintCards", {
+        props: {
+          numPlayers: numPlayersInput.value,
+          numWeeks: numWeeksInput.value,
+        },
+      });
+    });
   }
 
   generateBtn.addEventListener("click", () => {
@@ -241,6 +249,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     generateCards(numPlayers, numWeeks);
+    plausible("ClassicalBingoGenerateCards", {
+      props: {
+        numPlayers: numPlayersInput.value,
+        numWeeks: numWeeksInput.value,
+      },
+    });
   });
 
   // Add print button event listener
