@@ -17,7 +17,7 @@ function getRandomInt(min, max) {
 // Função para calcular o número de células por cartela
 function calculateCellsPerCard(totalCombinations, numPlayers) {
   const minCellsPerCard = Math.max(
-    9,
+    12,
     Math.ceil(totalCombinations / numPlayers)
   );
   // Arredonda para o próximo múltiplo de 3
@@ -121,7 +121,7 @@ function generateCards(numPlayers, numWeeks) {
   // Adiciona a cartela completa com todas as combinações únicas
   const fullCardElement = document.createElement("div");
   fullCardElement.className =
-    "bg-white rounded-lg shadow-md p-4 card-content print:w-1/2 print:inline-block print:align-top";
+    "bg-white rounded-lg shadow-md p-4 info-card-content print:w-1/2 print:inline-block print:align-top";
   fullCardElement.innerHTML = `
     <h3 class="text-lg font-bold mb-4 text-center">Fichas</h3>
     <div class="border-2 border-gray-800 rounded-lg overflow-hidden">
