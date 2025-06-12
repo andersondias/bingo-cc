@@ -83,7 +83,8 @@
         }
 
         /* Card styling for print */
-        .card-content {
+        .card-content,
+        .info-card-content {
           width: 100% !important;
           display: block !important;
           page-break-inside: avoid;
@@ -93,6 +94,7 @@
           box-shadow: none !important;
           border: 2px dashed #ccc !important;
           border-radius: 8px !important;
+          transition: all 0.3s ease;
         }
 
         /* Ensure table borders print properly */
@@ -115,7 +117,8 @@
         }
 
         /* Add page breaks after every second card */
-        .card-content:nth-of-type(2n) {
+        .card-content:nth-of-type(2n),
+        .info-card-content:nth-of-type(2n) {
           page-break-after: always;
           break-after: page;
         }
@@ -150,11 +153,8 @@
         box-shadow: 0 0 0 3px rgba(17, 37, 95, 0.1);
       }
 
-      .card-content {
-        transition: all 0.3s ease;
-      }
-
-      .card-content:hover {
+      .card-content:hover,
+      .info-card-content:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       }
