@@ -56,15 +56,15 @@ function generateUniqueCard(shuffledArray, cellsPerCard) {
 }
 
 // Função para gerar o HTML da tabela da cartela
-function generateCardTable(card, cellsPerCard) {
-  const rows = Math.ceil(cellsPerCard / 3);
+function generateCardTable(card, cellsPerCard, maxColumns = 3) {
+  const rows = Math.ceil(cellsPerCard / maxColumns);
   let html = '<table class="w-full border-collapse table-fixed">';
   html += "<tbody>";
 
   for (let i = 0; i < rows; i++) {
     html += "<tr>";
-    for (let j = 0; j < 3; j++) {
-      const index = i * 3 + j;
+    for (let j = 0; j < maxColumns; j++) {
+      const index = i * maxColumns + j;
       const content = index < card.length ? card[index] : "";
       html += `<td class="border-2 border-gray-800 p-3 text-center bg-blue-50 h-24 align-middle">${content}</td>`;
     }
@@ -108,26 +108,44 @@ function validateAllCombinations(numWeeks) {
   }
 }
 
+function renderPlayerCards(
+  cards,
+  cellsPerCard,
+  cardsContainer,
+  maxColumns = 3,
+  isFullCard = false
+) {
+  cards.forEach((card, index) => {
+    const cardElement = document.createElement("div");
+    cardElement.className = isFullCard
+      ? "bg-white rounded-lg shadow-md p-4 card-content full-card-print"
+      : "bg-white rounded-lg shadow-md p-4 card-content print:w-1/2 print:inline-block print:align-top";
+
+    const cardHTML = `
+      <h3 class="text-lg font-bold mb-4 text-center">${
+        isFullCard ? "Fichas" : `Cartela do Jogador ${index + 1}`
+      }</h3>
+      <div class="border-2 border-gray-800 rounded-lg overflow-hidden">
+        ${generateCardTable(card, cellsPerCard, maxColumns)}
+      </div>
+    `;
+
+    cardElement.innerHTML = cardHTML;
+    cardsContainer.appendChild(cardElement);
+  });
+}
+
 // Função para gerar todas as cartelas
 function generateCards(numPlayers, numWeeks) {
   const cardsContainer = document.getElementById("cardsContainer");
-  cardsContainer.innerHTML = ""; // Limpa o container
+  cardsContainer.innerHTML = ""; //
+  const fullCardContainer = document.getElementById("fullCardContainer");
+  fullCardContainer.innerHTML = "";
 
   // Gera todas as combinações possíveis
   const allCombinations = generateAllCombinations(numWeeks);
   const totalCombinations = allCombinations.length;
   const cellsPerCard = calculateCellsPerCard(totalCombinations, numPlayers);
-
-  // Adiciona a cartela completa com todas as combinações únicas
-  const fullCardElement = document.createElement("div");
-  fullCardElement.className =
-    "bg-white rounded-lg shadow-md p-4 info-card-content print:w-1/2 print:inline-block print:align-top";
-  fullCardElement.innerHTML = `
-    <h3 class="text-lg font-bold mb-4 text-center">Fichas</h3>
-    <div class="border-2 border-gray-800 rounded-lg overflow-hidden">
-      ${generateCardTable(allCombinations, allCombinations.length)}
-    </div>
-  `;
 
   // Embaralha as combinações
   let shuffledArray = shuffleArray([...allCombinations]);
@@ -151,24 +169,16 @@ function generateCards(numPlayers, numWeeks) {
   }
 
   // Cria o HTML para cada cartela
-  cards.forEach((card, index) => {
-    const cardElement = document.createElement("div");
-    cardElement.className =
-      "bg-white rounded-lg shadow-md p-4 card-content print:w-1/2 print:inline-block print:align-top";
+  renderPlayerCards(cards, cellsPerCard, cardsContainer);
 
-    const cardHTML = `
-            <h3 class="text-lg font-bold mb-4 text-center">Cartela do Jogador ${
-              index + 1
-            }</h3>
-            <div class="border-2 border-gray-800 rounded-lg overflow-hidden">
-                ${generateCardTable(card, cellsPerCard)}
-            </div>
-        `;
+  const maxCellsFullCard = 9 * 9;
+  const fullCards = [];
 
-    cardElement.innerHTML = cardHTML;
-    cardsContainer.appendChild(cardElement);
-    cardsContainer.appendChild(fullCardElement);
-  });
+  for (let i = 0; i < allCombinations.length; i += maxCellsFullCard) {
+    fullCards.push(allCombinations.slice(i, i + maxCellsFullCard));
+  }
+
+  renderPlayerCards(fullCards, maxCellsFullCard, fullCardContainer, 9, true);
 
   // Adiciona informações sobre as combinações disponíveis
   const infoElement = document.createElement("div");

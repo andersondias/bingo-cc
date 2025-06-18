@@ -61,6 +61,12 @@
 
     <style>
       @media print {
+        /* Force landscape orientation */
+        @page {
+          size: landscape;
+          margin: 0.5cm;
+        }
+
         /* Hide form and info section */
         .print\:hidden,
         form {
@@ -76,10 +82,12 @@
 
         /* Container styling for print */
         #cardsContainer {
-          display: block !important;
+          display: grid !important;
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 0.25rem !important;
           width: 100% !important;
           margin: 0 !important;
-          padding: 30px !important;
+          padding: 0.15rem !important;
         }
 
         /* Card styling for print */
@@ -89,11 +97,11 @@
           display: block !important;
           page-break-inside: avoid;
           break-inside: avoid;
-          margin: 0 0 30px 0 !important;
-          padding: 20px !important;
+          margin: 0 !important;
+          padding: 0.1rem !important;
           box-shadow: none !important;
-          border: 2px dashed #ccc !important;
-          border-radius: 8px !important;
+          border: 1px solid #ccc !important;
+          border-radius: 2px !important;
           transition: all 0.3s ease;
         }
 
@@ -101,9 +109,14 @@
         td {
           border: 1px solid #000 !important;
           background: white !important;
-          padding: 8px !important;
+          padding: 1px !important;
           text-align: center !important;
-          font-size: 14px !important;
+          font-size: 12px !important;
+          line-height: 1.1 !important;
+          height: 4.5rem !important;
+          white-space: normal !important;
+          word-break: break-word !important;
+          overflow-wrap: break-word !important;
         }
 
         /* Remove shadows and adjust borders for better printing */
@@ -116,9 +129,9 @@
           color: black !important;
         }
 
-        /* Add page breaks after every second card */
-        .card-content:nth-of-type(2n),
-        .info-card-content:nth-of-type(2n) {
+        /* Add page breaks after every 9 cards */
+        .card-content:nth-of-type(9n),
+        .info-card-content:nth-of-type(9n) {
           page-break-after: always;
           break-after: page;
         }
@@ -128,6 +141,14 @@
           max-width: 100% !important;
           padding: 0 !important;
           margin: 0 !important;
+        }
+
+        .full-card-print {
+          width: 100% !important;
+          max-width: 100% !important;
+          display: block !important;
+          box-sizing: border-box !important;
+          page-break-inside: avoid !important;
         }
       }
 
@@ -305,6 +326,7 @@
       >
         <!-- As cartelas serão inseridas aqui via JavaScript -->
       </div>
+      <div id="fullCardContainer" class="mt-4 gap-8"></div>
     </main>
 
     <footer class="mt-2 py-12 text-center print:!hidden bg-white shadow-inner">
@@ -386,6 +408,6 @@
       }
     </script>
 
-    <script src="app.js?v=202406102300"></script>
+    <script src="app.js?v=202506182300"></script>
   </body>
 </html>
