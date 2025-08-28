@@ -25,10 +25,10 @@ function calculateCellsPerCard(totalCombinations, numPlayers) {
 }
 
 // Função para gerar todas as combinações possíveis de assuntos e semanas
-function generateAllCombinations(numWeeks) {
+function generateAllCombinations(initialWeek, finalWeek) {
   const combinations = [];
   for (const subject of subjects) {
-    for (let week = 1; week <= numWeeks; week++) {
+    for (let week = initialWeek; week <= finalWeek; week++) {
       combinations.push(`${subject} ${week}`);
     }
   }
@@ -76,8 +76,11 @@ function generateCardTable(card, cellsPerCard, maxColumns = 3) {
 }
 
 // Função para validar todas as combinações
-function validateAllCombinations(numWeeks) {
-  const allPossibleCombinations = generateAllCombinations(numWeeks);
+function validateAllCombinations(initialWeek, finalWeek) {
+  const allPossibleCombinations = generateAllCombinations(
+    initialWeek,
+    finalWeek
+  );
   const cards = document.querySelectorAll(".card-content");
   const foundCombinations = new Set();
 
@@ -136,14 +139,14 @@ function renderPlayerCards(
 }
 
 // Função para gerar todas as cartelas
-function generateCards(numPlayers, numWeeks) {
+function generateCards(numPlayers, initialWeek, finalWeek) {
   const cardsContainer = document.getElementById("cardsContainer");
   cardsContainer.innerHTML = ""; //
   const fullCardContainer = document.getElementById("fullCardContainer");
   fullCardContainer.innerHTML = "";
 
   // Gera todas as combinações possíveis
-  const allCombinations = generateAllCombinations(numWeeks);
+  const allCombinations = generateAllCombinations(initialWeek, finalWeek);
   const totalCombinations = allCombinations.length;
   const cellsPerCard = calculateCellsPerCard(totalCombinations, numPlayers);
 
@@ -155,7 +158,8 @@ function generateCards(numPlayers, numWeeks) {
 
   while (shuffledArray.length < totalNeededCombinations) {
     const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
-    const randomWeek = Math.floor(Math.random() * numWeeks) + 1;
+    const randomWeek =
+      Math.floor(Math.random() * (finalWeek - initialWeek + 1)) + initialWeek;
     const newCombination = `${randomSubject} ${randomWeek}`;
     shuffledArray.push(newCombination);
   }
@@ -205,7 +209,7 @@ function generateCards(numPlayers, numWeeks) {
   const validateBtn = document.getElementById("validateBtn");
   if (validateBtn) {
     validateBtn.addEventListener("click", () => {
-      validateAllCombinations(numWeeks);
+      validateAllCombinations(initialWeek, finalWeek);
     });
   }
 
@@ -224,7 +228,8 @@ function generateCards(numPlayers, numWeeks) {
 document.addEventListener("DOMContentLoaded", () => {
   const generateBtn = document.getElementById("generateBtn");
   const numPlayersInput = document.getElementById("numPlayers");
-  const numWeeksInput = document.getElementById("numWeeks");
+  const initialWeekInput = document.getElementById("initialWeek");
+  const finalWeekInput = document.getElementById("finalWeek");
   const printBtn = document.getElementById("printBtn");
 
   // Initially disable print button
@@ -238,7 +243,8 @@ document.addEventListener("DOMContentLoaded", () => {
       plausible("ClassicalBingoPrintCards", {
         props: {
           numPlayers: numPlayersInput.value,
-          numWeeks: numWeeksInput.value,
+          initialWeek: initialWeekInput.value,
+          finalWeek: finalWeekInput.value,
         },
       });
     });
@@ -246,23 +252,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   generateBtn.addEventListener("click", () => {
     const numPlayers = parseInt(numPlayersInput.value);
-    const numWeeks = parseInt(numWeeksInput.value);
+    const initialWeek = parseInt(initialWeekInput.value);
+    const finalWeek = parseInt(finalWeekInput.value);
 
     if (isNaN(numPlayers) || numPlayers < 1 || numPlayers > 100) {
       alert("Por favor, insira um número válido de jogadores (1-100)");
       return;
     }
 
-    if (isNaN(numWeeks) || numWeeks < 1 || numWeeks > 24) {
-      alert("Por favor, insira um número válido de semanas (1-24)");
+    if (isNaN(initialWeek) || initialWeek < 1 || initialWeek > 24) {
+      alert("Por favor, insira um número válido para a semana inicial (1-24)");
       return;
     }
 
-    generateCards(numPlayers, numWeeks);
+    if (isNaN(finalWeek) || finalWeek < 1 || finalWeek > 24) {
+      alert("Por favor, insira um número válido para a semana final (1-24)");
+      return;
+    }
+
+    if (finalWeek < initialWeek) {
+      alert("A semana final deve ser maior ou igual à semana inicial");
+      return;
+    }
+
+    generateCards(numPlayers, initialWeek, finalWeek);
     plausible("ClassicalBingoGenerateCards", {
       props: {
         numPlayers: numPlayersInput.value,
-        numWeeks: numWeeksInput.value,
+        initialWeek: initialWeekInput.value,
+        finalWeek: finalWeekInput.value,
       },
     });
   });

@@ -281,17 +281,36 @@
             />
           </div>
 
-          <div class="mb-8">
+          <div class="mb-4">
             <label
-              for="numWeeks"
+              for="initialWeek"
               class="block text-gray-700 text-sm font-bold mb-2"
             >
-              Em que semana você está? (máx. 24)
+              Semana Inicial (máx. 24)
             </label>
             <input
               type="number"
               inputmode="numeric"
-              id="numWeeks"
+              id="initialWeek"
+              min="1"
+              max="24"
+              value="1"
+              class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 input-field"
+              placeholder="Ex: 1"
+            />
+          </div>
+
+          <div class="mb-8">
+            <label
+              for="finalWeek"
+              class="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Semana Final (máx. 24)
+            </label>
+            <input
+              type="number"
+              inputmode="numeric"
+              id="finalWeek"
               min="1"
               max="24"
               class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 input-field"
