@@ -306,6 +306,58 @@ document.addEventListener("DOMContentLoaded", () => {
   const finalWeekInput = document.getElementById("finalWeek");
   const printBtn = document.getElementById("printBtn");
 
+  // Load parameters from URL if they exist
+  const urlParams = new URLSearchParams(window.location.search);
+  if (
+    urlParams.has("players") &&
+    urlParams.has("initial") &&
+    urlParams.has("final")
+  ) {
+    const players = urlParams.get("players");
+    const initial = urlParams.get("initial");
+    const final = urlParams.get("final");
+
+    // Validate and set the values
+    if (players && initial && final) {
+      numPlayersInput.value = players;
+      initialWeekInput.value = initial;
+      finalWeekInput.value = final;
+
+      // Auto-generate cards if all parameters are valid
+      const numPlayers = parseInt(players);
+      const initialWeek = parseInt(initial);
+      const finalWeek = parseInt(final);
+
+      if (
+        !isNaN(numPlayers) &&
+        numPlayers >= 1 &&
+        numPlayers <= 100 &&
+        !isNaN(initialWeek) &&
+        initialWeek >= 1 &&
+        initialWeek <= 24 &&
+        !isNaN(finalWeek) &&
+        finalWeek >= 1 &&
+        finalWeek <= 24 &&
+        finalWeek >= initialWeek
+      ) {
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+          generateCards(numPlayers, initialWeek, finalWeek);
+          // Update share URL with loaded parameters
+          updateShareUrl();
+          // Show share URL container since parameters are present
+          if (shareUrlContainer) {
+            shareUrlContainer.classList.remove("hidden");
+          }
+          // Hide the "Gerar Link" button since URL is already available
+          if (shareBtn) {
+            shareBtn.style.display = "none";
+          }
+        }, 100);
+      }
+    }
+  }
+
   // Initially disable print button
   if (printBtn) {
     printBtn.disabled = true;
@@ -349,6 +401,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Update URL with current parameters
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set("players", numPlayersInput.value);
+    currentUrl.searchParams.set("initial", initialWeekInput.value);
+    currentUrl.searchParams.set("final", finalWeekInput.value);
+    window.history.replaceState({}, "", currentUrl.toString());
+
     generateCards(numPlayers, initialWeek, finalWeek);
     plausible("ClassicalBingoGenerateCards", {
       props: {
@@ -363,6 +422,61 @@ document.addEventListener("DOMContentLoaded", () => {
   if (printBtn) {
     printBtn.addEventListener("click", () => {
       window.print();
+    });
+  }
+
+  // Share functionality - always available
+  const shareUrlContainer = document.getElementById("shareUrlContainer");
+  const shareUrlInput = document.getElementById("shareUrl");
+  const copyUrlBtn = document.getElementById("copyUrlBtn");
+
+  // Function to update share URL based on current form values
+  function updateShareUrl() {
+    const numPlayers = numPlayersInput.value || "";
+    const initialWeek = initialWeekInput.value || "";
+    const finalWeek = finalWeekInput.value || "";
+
+    if (numPlayers && initialWeek && finalWeek) {
+      const shareableUrl = new URL(window.location.href);
+      shareableUrl.searchParams.set("players", numPlayers);
+      shareableUrl.searchParams.set("initial", initialWeek);
+      shareableUrl.searchParams.set("final", finalWeek);
+
+      if (shareUrlInput) {
+        shareUrlInput.value = shareableUrl.toString();
+      }
+    }
+  }
+
+  // Update share URL when form values change
+  [numPlayersInput, initialWeekInput, finalWeekInput].forEach((input) => {
+    input.addEventListener("input", updateShareUrl);
+  });
+
+  updateShareUrl();
+  shareUrlContainer.classList.remove("hidden");
+
+  if (copyUrlBtn) {
+    copyUrlBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(shareUrlInput.value);
+        copyUrlBtn.textContent = "Copiado!";
+        copyUrlBtn.classList.remove("bg-gray-500", "hover:bg-gray-600");
+        copyUrlBtn.classList.add("bg-green-500");
+        setTimeout(() => {
+          copyUrlBtn.textContent = "Copiar";
+          copyUrlBtn.classList.remove("bg-green-500");
+          copyUrlBtn.classList.add("bg-gray-500", "hover:bg-gray-600");
+        }, 2000);
+      } catch (err) {
+        // Fallback for older browsers
+        shareUrlInput.select();
+        document.execCommand("copy");
+        copyUrlBtn.textContent = "Copiado!";
+        setTimeout(() => {
+          copyUrlBtn.textContent = "Copiar";
+        }, 2000);
+      }
     });
   }
 });
