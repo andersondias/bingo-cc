@@ -349,10 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (shareUrlContainer) {
             shareUrlContainer.classList.remove("hidden");
           }
-          // Hide the "Gerar Link" button since URL is already available
-          if (shareBtn) {
-            shareBtn.style.display = "none";
-          }
         }, 100);
       }
     }
