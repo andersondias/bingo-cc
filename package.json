@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "update-version": "node -e \"const fs=require('fs');const html=fs.readFileSync('index.html','utf8');const timestamp=Math.floor(Date.now()/1000);const updated=html.replace(/v=\\d+/g,'v='+timestamp);fs.writeFileSync('index.html',updated);console.log('Updated version to v='+timestamp);\"",
+    "build-with-version": "npm run update-version && npm run build",
+    "prebuild": "npm run update-version"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
