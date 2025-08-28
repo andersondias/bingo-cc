@@ -45,13 +45,50 @@ function shuffleArray(array) {
 }
 
 // Função para gerar uma cartela única
-function generateUniqueCard(shuffledArray, cellsPerCard) {
+function generateUniqueCard(
+  availableCombinations,
+  cellsPerCard,
+  initialWeek,
+  finalWeek
+) {
   const card = [];
+  const usedInCard = new Set();
+
+  // Create a copy of available combinations to avoid modifying the original
+  const remainingCombinations = [...availableCombinations];
+
   for (let i = 0; i < cellsPerCard; i++) {
-    if (shuffledArray.length > 0) {
-      card.push(shuffledArray.pop());
+    let selectedCombination;
+
+    // Try to find an unused combination from the available list
+    if (remainingCombinations.length > 0) {
+      const randomIndex = Math.floor(
+        Math.random() * remainingCombinations.length
+      );
+      selectedCombination = remainingCombinations[randomIndex];
+      remainingCombinations.splice(randomIndex, 1);
+    } else {
+      // If no more combinations available, generate a random one
+      const randomSubject =
+        subjects[Math.floor(Math.random() * subjects.length)];
+      const randomWeek =
+        Math.floor(Math.random() * (finalWeek - initialWeek + 1)) + initialWeek;
+      selectedCombination = `${randomSubject} ${randomWeek}`;
     }
+
+    // Ensure this combination hasn't been used in this specific card
+    while (usedInCard.has(selectedCombination)) {
+      const randomSubject =
+        subjects[Math.floor(Math.random() * subjects.length)];
+      const randomWeek =
+        Math.floor(Math.random() * (finalWeek - initialWeek + 1)) + initialWeek;
+      selectedCombination = `${randomSubject} ${randomWeek}`;
+    }
+
+    card.push(selectedCombination);
+    usedInCard.add(selectedCombination);
   }
+
   return card;
 }
 
@@ -83,16 +120,33 @@ function validateAllCombinations(initialWeek, finalWeek) {
   );
   const cards = document.querySelectorAll(".card-content");
   const foundCombinations = new Set();
+  let validationResults = [];
 
-  // Coleta todas as combinações presentes nas cartelas
-  cards.forEach((card) => {
+  // Verifica cada cartela individualmente para duplicatas
+  cards.forEach((card, cardIndex) => {
     const cells = card.querySelectorAll("td");
+    const cardCombinations = new Set();
+    const duplicatesInCard = [];
+
     cells.forEach((cell) => {
       const content = cell.textContent.trim();
       if (content) {
+        if (cardCombinations.has(content)) {
+          duplicatesInCard.push(content);
+        } else {
+          cardCombinations.add(content);
+        }
         foundCombinations.add(content);
       }
     });
+
+    if (duplicatesInCard.length > 0) {
+      validationResults.push(
+        `Cartela ${
+          cardIndex + 1
+        }: Encontradas duplicatas: ${duplicatesInCard.join(", ")}`
+      );
+    }
   });
 
   // Verifica se todas as combinações possíveis estão presentes
@@ -100,15 +154,30 @@ function validateAllCombinations(initialWeek, finalWeek) {
     (combination) => !foundCombinations.has(combination)
   );
 
-  if (missingCombinations.length === 0) {
-    alert("Todas as combinações possíveis estão presentes nas cartelas!");
-  } else {
-    alert(
-      `Faltam ${
-        missingCombinations.length
-      } combinações:\n${missingCombinations.join("\n")}`
-    );
+  // Monta a mensagem final
+  let finalMessage = "";
+
+  if (validationResults.length > 0) {
+    finalMessage += "PROBLEMAS ENCONTRADOS:\n\n";
+    finalMessage += validationResults.join("\n");
+    finalMessage += "\n\n";
   }
+
+  if (missingCombinations.length === 0) {
+    finalMessage +=
+      "✅ Todas as combinações possíveis estão presentes nas cartelas!";
+  } else {
+    finalMessage += `❌ Faltam ${
+      missingCombinations.length
+    } combinações:\n${missingCombinations.join("\n")}`;
+  }
+
+  if (validationResults.length === 0 && missingCombinations.length === 0) {
+    finalMessage =
+      "✅ VALIDAÇÃO COMPLETA: Todas as cartelas estão corretas!\n- Nenhuma duplicata encontrada\n- Todas as combinações possíveis estão presentes";
+  }
+
+  alert(finalMessage);
 }
 
 function renderPlayerCards(
@@ -168,7 +237,12 @@ function generateCards(numPlayers, initialWeek, finalWeek) {
 
   // Gera as cartelas
   for (let i = 0; i < numPlayers; i++) {
-    const card = generateUniqueCard(shuffledArray, cellsPerCard);
+    const card = generateUniqueCard(
+      shuffledArray,
+      cellsPerCard,
+      initialWeek,
+      finalWeek
+    );
     cards.push(card);
   }
 
