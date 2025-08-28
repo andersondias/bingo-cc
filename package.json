@@ -2,14 +2,15 @@
   "name": "cc_bingo",
   "version": "1.0.0",
   "scripts": {
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "update-version": "node -e \"const fs=require('fs');const html=fs.readFileSync('index.html','utf8');const timestamp=Math.floor(Date.now()/1000);const updated=html.replace(/v=\\d+/g,'v='+timestamp);fs.writeFileSync('index.html',updated);console.log('Updated version to v='+timestamp);\"",
-    "build-with-version": "npm run update-version && npm run build",
-    "prebuild": "npm run update-version"
+    "watch-css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify --watch",
+    "watch-js": "node scripts/watch-js.js",
+    "watch": "concurrently \"npm run watch-css\" \"npm run watch-js\"",
+    "update-version": "node scripts/update-version.js"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
+    "chokidar": "^3.5.3",
+    "concurrently": "^8.2.2",
     "postcss": "^8.4.38",
     "sharp": "^0.34.2",
     "tailwindcss": "^3.4.1"
