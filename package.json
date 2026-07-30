@@ -2,6 +2,7 @@
   "name": "cc_bingo",
   "version": "1.0.0",
   "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch-css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify --watch",
     "watch-js": "node scripts/watch-js.js",
     "watch": "concurrently \"npm run watch-css\" \"npm run watch-js\"",
