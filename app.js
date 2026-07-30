@@ -180,6 +180,35 @@ function validateAllCombinations(initialWeek, finalWeek) {
   alert(finalMessage);
 }
 
+// Calcula o layout de impressão (A4 paisagem), garantindo que nenhuma
+// cartela seja dividida entre páginas. Se a cartela tiver linhas demais
+// para caber em uma página, a altura das células é reduzida.
+function calculatePrintLayout(cellsPerCard, maxColumns = 3) {
+  const rowsPerCard = Math.ceil(cellsPerCard / maxColumns);
+  // Altura útil de uma página A4 paisagem com margens de 0.5cm (~45rem)
+  const usablePageHeightRem = 45;
+  // Título + margens/bordas da cartela (~3.5rem)
+  const cardHeaderRem = 3.5;
+  const defaultCellHeightRem = 4.5;
+
+  const maxCellHeightRem = (usablePageHeightRem - cardHeaderRem) / rowsPerCard;
+  const cellHeightRem = Math.max(
+    1.5,
+    Math.min(defaultCellHeightRem, maxCellHeightRem)
+  );
+
+  const cardHeightRem = cardHeaderRem + rowsPerCard * cellHeightRem;
+  const cardRowsPerPage = Math.max(
+    1,
+    Math.floor(usablePageHeightRem / cardHeightRem)
+  );
+
+  return {
+    cardsPerPage: cardRowsPerPage * maxColumns,
+    cellHeightRem,
+  };
+}
+
 function renderPlayerCards(
   cards,
   cellsPerCard,
@@ -187,11 +216,23 @@ function renderPlayerCards(
   maxColumns = 3,
   isFullCard = false
 ) {
+  const { cardsPerPage, cellHeightRem } = calculatePrintLayout(
+    cellsPerCard,
+    maxColumns
+  );
+  if (!isFullCard) {
+    document.documentElement.style.setProperty(
+      "--print-cell-height",
+      `${cellHeightRem}rem`
+    );
+  }
+  let pageElement = null;
+
   cards.forEach((card, index) => {
     const cardElement = document.createElement("div");
-    cardElement.className = isFullCard
-      ? "bg-white rounded-lg shadow-md p-4 card-content full-card-print"
-      : "bg-white rounded-lg shadow-md p-4 card-content print:w-1/2 print:inline-block print:align-top";
+    cardElement.className =
+      "bg-white rounded-lg shadow-md p-4 card-content" +
+      (isFullCard ? " full-card-print" : "");
 
     const cardHTML = `
       <h3 class="text-lg font-bold mb-4 text-center">${
@@ -203,7 +244,20 @@ function renderPlayerCards(
     `;
 
     cardElement.innerHTML = cardHTML;
-    cardsContainer.appendChild(cardElement);
+
+    if (isFullCard) {
+      // Cada folha de fichas já ocupa uma página própria (CSS full-card-print)
+      cardsContainer.appendChild(cardElement);
+      return;
+    }
+
+    // Agrupa as cartelas em páginas para que nunca sejam cortadas na impressão
+    if (index % cardsPerPage === 0) {
+      pageElement = document.createElement("div");
+      pageElement.className = "print-page";
+      cardsContainer.appendChild(pageElement);
+    }
+    pageElement.appendChild(cardElement);
   });
 }
 
