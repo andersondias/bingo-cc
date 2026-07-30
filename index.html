@@ -57,7 +57,7 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://andersondias.com.br/bingo-cc" />
 
-    <link href="dist/output.css?v=1756424710" rel="stylesheet" />
+    <link href="dist/output.css?v=1785374945" rel="stylesheet" />
 
     <style>
       @media print {
@@ -82,12 +82,34 @@
 
         /* Container styling for print */
         #cardsContainer {
+          display: block !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0.15rem !important;
+        }
+
+        /* Each .print-page holds only as many cards as fit on one sheet,
+           so a card can never be split across pages */
+        .print-page {
           display: grid !important;
           grid-template-columns: repeat(3, 1fr) !important;
           gap: 0.25rem !important;
           width: 100% !important;
-          margin: 0 !important;
-          padding: 0.15rem !important;
+          page-break-after: always;
+          break-after: page;
+          page-break-inside: avoid;
+          break-inside: avoid;
+        }
+
+        .print-page:last-of-type {
+          page-break-after: auto;
+          break-after: auto;
+        }
+
+        /* Cell height is set via JS so that a card always fits in one page,
+           even when it has many rows */
+        .print-page td {
+          height: var(--print-cell-height, 4.5rem) !important;
         }
 
         /* Card styling for print */
@@ -129,13 +151,6 @@
           color: black !important;
         }
 
-        /* Add page breaks after every 9 cards */
-        .card-content:nth-of-type(9n),
-        .info-card-content:nth-of-type(9n) {
-          page-break-after: always;
-          break-after: page;
-        }
-
         /* Ensure the container takes full width */
         .container {
           max-width: 100% !important;
@@ -143,13 +158,24 @@
           margin: 0 !important;
         }
 
+        /* Fichas: always start on a fresh page at the end of the document,
+           one sheet per page */
         .full-card-print {
           width: 100% !important;
           max-width: 100% !important;
           display: block !important;
           box-sizing: border-box !important;
+          page-break-before: always !important;
+          break-before: page !important;
           page-break-inside: avoid !important;
+          break-inside: avoid !important;
         }
+      }
+
+      /* On screen, page wrappers are transparent so cards keep flowing
+         in the #cardsContainer grid */
+      .print-page {
+        display: contents;
       }
 
       .primary-btn {
@@ -454,6 +480,6 @@
       }
     </script>
 
-    <script src="app.js?v=1756424710"></script>
+    <script src="app.js?v=1785374945"></script>
   </body>
 </html>
